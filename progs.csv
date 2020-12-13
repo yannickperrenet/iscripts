@@ -1,3 +1,12 @@
 #TAG,NAME IN REPO (or git url),PURPOSE
 ,silversearcher-ag,"is a faster and more intuitive replacement for grep."
 P,ranger-fm,"is a VIM-inspired filemanager for the console."
+,vim-gtk3,"is a another compiled Vim with clipboard support."
+,tmux,"is a terminal multiplexer."
+P,flake8,"is a tool for Python style guide enforcement."
+,tree,"is a recursive directory listing program."
+,htop,"is a process viewer for Linux."
+,fzf,"is a command-line fuzzy finder."
+,fd-find,"is a fast and user-friendly alternative to 'find'."
+,bat,"is a cat(1) clone with wings."
+P,virtualenv,"is a tool for creating isolated virtual python environments."

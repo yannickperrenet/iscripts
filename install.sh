@@ -8,7 +8,7 @@ cat << EOF
 Optional arguments for custom use:
 
 -h      Display this message.
--p      Dependencies and programs csv (local file or url).
+-p      Dependencies and programs csv (local file).
 
 EOF
 
@@ -23,7 +23,7 @@ while getopts ":h" opt; do
     esac
 done
 
-[ -z "$progsfile" ] && progsfile="https://raw.githubusercontent.com/yannickperrenet/iscripts/master/progs.csv"
+[ -z "$progsfile" ] && progsfile="progs.csv"
 [ -z "$dotfilesrepo" ] && dotfilesrepo="https://github.com/yannickperrenet/dotfiles.git"
 
 ### FUNCTIONS ###
@@ -50,9 +50,7 @@ pipinstall() {
 
 progsinstallation() {
     # Get the progsfile and delete the header.
-    # [ -f "$progsfile" ] && cat "$progsfile" | sed '/^#/d' > /tmp/progs.csv
-    ([ -f "$progsfile" ] && cp "$progsfile" /tmp/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' > /tmp/progs.csv
-
+    [ -f "$progsfile" ] && cat "$progsfile" | sed '/^#/d' > /tmp/progs.csv
 
     total=$(wc -l < /tmp/progs.csv)
 
@@ -81,7 +79,7 @@ putgitrepo() { # Downloads a gitrepo $1 and places the files in $2 only overwrit
     chown -R "$USER":"$USER" "$dir" "$2"
 
 	sudo -u "$USER" git clone --recursive "$1" "$dir" > /dev/null 2>&1
-	sudo -u "$USER" cp -rfT "$dir" "$2"
+	sudo -u "$USER" cp -rfT "$dir" "$2" > /dev/null 2>&1
 }
 
 ### THE ACTUAL SCRIPT ###

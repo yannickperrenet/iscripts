@@ -6,6 +6,6 @@ Installation scripts for my Ubuntu installation.
 
 ## Installation
 ```bash
-curl -LO https://raw.githubusercontent.com/yannickperrenet/iscripts/master/install.sh
+git clone https://github.com/yannickperrenet/iscripts.git && cd iscripts
 sh install.sh
 ```
