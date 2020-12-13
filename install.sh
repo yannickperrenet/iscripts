@@ -97,5 +97,5 @@ progsinstallation
 putgitrepo "$dotfilesrepo" "/home/$USER/.config"
 
 # Make zsh the default shell for the user.
-chsh -s /bin/zsh "$name" > /dev/null 2>&1
-sudo -u "$name" mkdir -p "/home/$name/.cache/zsh/"
+sudo chsh -s /bin/zsh "$USER" > /dev/null 2>&1
+sudo -u "$USER" mkdir -p "/home/$USER/.cache/zsh/"
