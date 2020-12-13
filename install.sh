@@ -49,8 +49,10 @@ pipinstall() {
 }
 
 progsinstallation() {
-    # Delete the header of the csv file.
-    [ -f "$progsfile" ] && cat "$progsfile" | sed '/^#/d' > /tmp/progs.csv
+    # Get the progsfile and delete the header.
+    # [ -f "$progsfile" ] && cat "$progsfile" | sed '/^#/d' > /tmp/progs.csv
+    ([ -f "$progsfile" ] && cp "$progsfile" /tmp/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' > /tmp/progs.csv
+
 
     total=$(wc -l < /tmp/progs.csv)
 
