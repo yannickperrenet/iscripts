@@ -82,6 +82,17 @@ putgitrepo() { # Downloads a gitrepo $1 and places the files in $2 only overwrit
 	sudo -u "$USER" cp -rfT "$dir" "$2" > /dev/null 2>&1
 }
 
+setupsymlinks() {
+    ln -f -s "/home/$USER/.config/shell/profile" "/home/$USER/.zprofile"
+    ln -f -s "/home/$USER/.config/shell/profile" "/home/$USER/.profile"
+
+    ln -f -s "/home/$USER/.config/x11/Xresources" "/home/$USER/.Xresources"
+}
+
+getwallpaper() {
+    curl -o $1 https://w.wallhaven.cc/full/9m/wallhaven-9mxqjk.jpg
+}
+
 ### THE ACTUAL SCRIPT ###
 
 # Build dependencies.
@@ -96,6 +107,12 @@ progsinstallation
 # Install the dotfiles in the user's home directory.
 putgitrepo "$dotfilesrepo" "/home/$USER/.config"
 
+# Setup symlinks to use the dotfiles repo.
+setupsymlinks
+
 # Make zsh the default shell for the user.
 sudo chsh -s /bin/zsh "$USER" > /dev/null 2>&1
 sudo -u "$USER" mkdir -p "/home/$USER/.cache/zsh/"
+
+# Get the wallpaper so that i3 can set it up.
+getwallpaper "~/Pictures/wallpapers/nature-landscape.jpg"
