@@ -115,4 +115,5 @@ sudo chsh -s /bin/zsh "$USER" > /dev/null 2>&1
 sudo -u "$USER" mkdir -p "/home/$USER/.cache/zsh/"
 
 # Get the wallpaper so that i3 can set it up.
-getwallpaper "~/Pictures/wallpapers/nature-landscape.jpg"
+mkdir -p /home/$USER/Pictures/wallpapers/
+getwallpaper "/home/$USER/Pictures/wallpapers/nature-landscape.jpg"
