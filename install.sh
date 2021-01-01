@@ -25,6 +25,7 @@ done
 
 [ -z "$progsfile" ] && progsfile="progs.csv"
 [ -z "$dotfilesrepo" ] && dotfilesrepo="https://github.com/yannickperrenet/dotfiles.git"
+[ -z "$binrepo" ] && binrepo="https://github.com/yannickperrenet/bin.git"
 
 ### FUNCTIONS ###
 
@@ -106,6 +107,9 @@ progsinstallation
 
 # Install the dotfiles in the user's home directory.
 putgitrepo "$dotfilesrepo" "/home/$USER/.config"
+
+# Install custom scripts.
+putgitrepo "$binrepo" "/home/$USER/.local/bin"
 
 # Setup symlinks to use the dotfiles repo.
 setupsymlinks
