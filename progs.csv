@@ -1,7 +1,7 @@
 #TAG,NAME IN REPO (or git url),PURPOSE
 ,silversearcher-ag,"is a faster and more intuitive replacement for grep."
 P,ranger-fm,"is a VIM-inspired filemanager for the console."
-,vim-gtk3,"is a another compiled Vim with clipboard support."
+,neovim,"is a vim-fork focused on extensibility and usability."
 ,tmux,"is a terminal multiplexer."
 P,flake8,"is a tool for Python style guide enforcement."
 ,tree,"is a recursive directory listing program."

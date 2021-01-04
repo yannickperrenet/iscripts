@@ -108,11 +108,11 @@ progsinstallation
 # Install the dotfiles in the user's home directory.
 putgitrepo "$dotfilesrepo" "/home/$USER/.config"
 
-# Install custom scripts.
-putgitrepo "$binrepo" "/home/$USER/.local/bin"
-
 # Setup symlinks to use the dotfiles repo.
 setupsymlinks
+
+# Install custom scripts.
+putgitrepo "$binrepo" "/home/$USER/.local/bin"
 
 # Make zsh the default shell for the user.
 sudo chsh -s /bin/zsh "$USER" > /dev/null 2>&1
