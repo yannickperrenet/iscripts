@@ -9,6 +9,7 @@ Optional arguments for custom use:
 
 -h      Display this message.
 -p      Dependencies and programs csv (local file).
+-l      Specify to also install language servers.
 
 EOF
 
@@ -16,10 +17,11 @@ EOF
 exit 1
 }
 
-while getopts ":h" opt; do
+while getopts ":hp:l" opt; do
     case $opt in
         h) printhelp ;;
         p) progsfile=${OPTARG} ;;
+        l) lsp=true ;;
     esac
 done
 
@@ -121,3 +123,6 @@ sudo -u "$USER" mkdir -p "/home/$USER/.cache/zsh/"
 # Get the wallpaper so that i3 can set it up.
 mkdir -p /home/$USER/Pictures/wallpapers/
 getwallpaper "/home/$USER/Pictures/wallpapers/nature-landscape.jpg"
+
+# If specified, then install language servers.
+[ "$lsp" ] && sh language_servers.sh
