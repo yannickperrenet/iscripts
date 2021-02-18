@@ -73,8 +73,6 @@ progsinstallation() {
 }
 
 putgitrepo() { # Downloads a gitrepo $1 and places the files in $2 only overwriting conflicts
-    echo "Installing dotfiles..."
-
     # Create a temporary directory and the destination directory, and
     # make sure they are owned by the current user.
 	dir=$(mktemp -d)
@@ -108,13 +106,22 @@ done
 progsinstallation
 
 # Install the dotfiles in the user's home directory.
+echo "Installing dotfiles..."
 putgitrepo "$dotfilesrepo" "/home/$USER/.config"
 
 # Setup symlinks to use the dotfiles repo.
 setupsymlinks
 
 # Install custom scripts.
+echo "Installing custom local scripts..."
 putgitrepo "$binrepo" "/home/$USER/.local/bin"
+
+# TODO: Once this become more repositories, they should be added to
+#       `progs.csv` or another csv file.
+# Install git repos
+echo "Pulling standalone git repos into '~/.opt'..."
+mkdir -p "/home/$USER/.opt"
+putgitrepo "https://github.com/pyenv/pyenv" "/home/$USER/.opt/pyenv"
 
 # Make zsh the default shell for the user.
 sudo chsh -s /bin/zsh "$USER" > /dev/null 2>&1
