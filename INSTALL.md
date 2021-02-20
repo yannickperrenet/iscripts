@@ -9,7 +9,9 @@ sudo apt install git
 2. Run the executable in this repository
 ```bash
 git clone https://github.com/yannickperrenet/iscripts.git && cd iscripts
-sh install.sh
+
+# Delete the `-l` option to not install language-servers.
+sh install.sh -l
 ```
 3. Reboot and boot into `i3`.
 4. Install the manual programs in `manual-progs.csv`. It might be useful to open the file in the

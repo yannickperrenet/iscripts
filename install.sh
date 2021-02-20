@@ -96,10 +96,15 @@ progsinstallation
 
 # Install the dotfiles in the user's home directory.
 echo "Installing dotfiles..."
-putgitrepo "$dotfilesrepo" "/home/$USER"
+# putgitrepo "$dotfilesrepo" "/home/$USER"
 # Setup a bare git repository to manage the dotfiles
 git clone --bare --config status.showUntrackedFiles=no "$dotfilesrepo" "/home/$USER/.local/share/dotfiles"
-rm -rf "/home/$USER/.git"
+alias dfg="/usr/bin/git --git-dir=/home/$USER/.local/share/dotfiles --work-tree=/home/$USER"
+# Setup all the files.
+dfg checkout -f
+# Initialize the submodules, which has to be done like this in order for
+# the bare repository to be able to manage them.
+dfg submodule update --init --recursive
 
 # Make zsh the default shell for the user.
 sudo chsh -s /bin/zsh "$USER" > /dev/null 2>&1

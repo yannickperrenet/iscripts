@@ -7,7 +7,9 @@ Installation scripts for my Ubuntu installation.
 ## Installation
 ```bash
 git clone https://github.com/yannickperrenet/iscripts.git && cd iscripts
-sh install.sh
+
+# Delete the `-l` option to not install language-servers.
+sh install.sh -l
 ```
 
 For a complete step-by-step process to set up everything, see the `INSTALL.md` file.
