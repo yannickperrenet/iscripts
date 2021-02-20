@@ -105,6 +105,10 @@ dfg checkout -f
 # Initialize the submodules, which has to be done like this in order for
 # the bare repository to be able to manage them.
 dfg submodule update --init --recursive
+# Delete files, but make git ignore the deletion. The files can simply
+# be restored with e.g. `dfg checkout README.md`.
+rm -f "/home/$USER/README.md" "/home/$USER/LICENSE"
+dfg update-index --assume-unchanged "/home/$USER/README.md" "/home/$USER/LICENSE"
 
 # Make zsh the default shell for the user.
 sudo chsh -s /bin/zsh "$USER" > /dev/null 2>&1
