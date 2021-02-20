@@ -98,7 +98,7 @@ progsinstallation
 echo "Installing dotfiles..."
 putgitrepo "$dotfilesrepo" "/home/$USER"
 # Setup a bare git repository to manage the dotfiles
-git clone --bare "$dotfilesrepo" "/home/$USER/.local/share/dotfiles"
+git clone --bare --config status.showUntrackedFiles=no "$dotfilesrepo" "/home/$USER/.local/share/dotfiles"
 rm -rf "/home/$USER/.git"
 
 # Make zsh the default shell for the user.
