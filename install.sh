@@ -79,19 +79,8 @@ putgitrepo() { # Downloads a gitrepo $1 and places the files in $2 only overwrit
     [ ! -d "$2" ] && mkdir -p "$2"
     chown -R "$USER":"$USER" "$dir" "$2"
 
-	sudo -u "$USER" git clone --recursive "$1" "$dir" > /dev/null 2>&1
-	sudo -u "$USER" cp -rfT "$dir" "$2" > /dev/null 2>&1
-}
-
-setupsymlinks() {
-    ln -f -s "/home/$USER/.config/shell/profile" "/home/$USER/.zprofile"
-    ln -f -s "/home/$USER/.config/shell/profile" "/home/$USER/.profile"
-
-    ln -f -s "/home/$USER/.config/x11/Xresources" "/home/$USER/.Xresources"
-}
-
-getwallpaper() {
-    curl -o $1 https://w.wallhaven.cc/full/9m/wallhaven-9mxqjk.jpg
+	sudo -u "$USER" git clone --recursive --recurse-submodules "$1" "$dir" > /dev/null 2>&1
+	sudo -u "$USER" cp -rfT "$dir" "$2" >/dev/null 2>&1
 }
 
 ### THE ACTUAL SCRIPT ###
@@ -107,29 +96,14 @@ progsinstallation
 
 # Install the dotfiles in the user's home directory.
 echo "Installing dotfiles..."
-putgitrepo "$dotfilesrepo" "/home/$USER/.config"
-
-# Setup symlinks to use the dotfiles repo.
-setupsymlinks
-
-# Install custom scripts.
-echo "Installing custom local scripts..."
-putgitrepo "$binrepo" "/home/$USER/.local/bin"
-
-# TODO: Once this become more repositories, they should be added to
-#       `progs.csv` or another csv file.
-# Install git repos
-echo "Pulling standalone git repos into '~/.opt'..."
-mkdir -p "/home/$USER/.opt"
-putgitrepo "https://github.com/pyenv/pyenv" "/home/$USER/.opt/pyenv"
+putgitrepo "$dotfilesrepo" "/home/$USER"
+# Setup a bare git repository to manage the dotfiles
+git clone --bare "$dotfilesrepo" "/home/$USER/.local/share/dotfiles"
+rm -rf "/home/$USER/.git"
 
 # Make zsh the default shell for the user.
 sudo chsh -s /bin/zsh "$USER" > /dev/null 2>&1
 sudo -u "$USER" mkdir -p "/home/$USER/.cache/zsh/"
-
-# Get the wallpaper so that i3 can set it up.
-mkdir -p /home/$USER/Pictures/wallpapers/
-getwallpaper "/home/$USER/Pictures/wallpapers/nature-landscape.jpg"
 
 # If specified, then install language servers.
 [ "$lsp" ] && sh language_servers.sh
