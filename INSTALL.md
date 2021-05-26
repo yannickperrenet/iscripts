@@ -22,3 +22,6 @@ sh install.sh -l
 ```bash
 ssh-keygen -t rsa -b 2048 -C "email@example.com"
 ```
+7. Follow the [zenbrowsing installation](https://github.com/florianperrenet/zenbrowsing) to
+   experience distraction free browsing. Note: zenbrowsing is already located at
+   `~/.opt/zenbrowsing`.
