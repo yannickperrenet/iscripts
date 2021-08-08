@@ -27,7 +27,6 @@ done
 
 [ -z "$progsfile" ] && progsfile="progs.csv"
 [ -z "$dotfilesrepo" ] && dotfilesrepo="https://github.com/yannickperrenet/dotfiles.git"
-[ -z "$binrepo" ] && binrepo="https://github.com/yannickperrenet/bin.git"
 
 ### FUNCTIONS ###
 

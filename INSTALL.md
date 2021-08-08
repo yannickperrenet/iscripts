@@ -25,3 +25,7 @@ ssh-keygen -t rsa -b 2048 -C "email@example.com"
 7. Follow the [zenbrowsing installation](https://github.com/florianperrenet/zenbrowsing) to
    experience distraction free browsing. Note: zenbrowsing is already located at
    `~/.opt/zenbrowsing`.
+
+## Final notes
+The `dotfiles` repo will be pulled using HTTPS to `/home/$USER/.local/share/dotfiles` and thus the
+remote has to be changed to `git@github.com:yannickperrenet/dotfiles.git` in order to use SSH.
