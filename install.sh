@@ -115,3 +115,10 @@ sudo -u "$USER" mkdir -p "/home/$USER/.cache/zsh/"
 
 # If specified, then install language servers.
 [ "$lsp" ] && sh language_servers.sh
+
+# ----- Application specific installation
+# See: https://github.com/jonls/redshift/issues/850
+sudo rm /etc/apparmor.d/local/usr.bin.redshift /etc/apparmor.d/usr.bin.redshift
+sudo systemctl reload apparmor.service
+# Remove Gnome Display Manager and start on a tty instead
+sudo apt-get remove -y gdm3
