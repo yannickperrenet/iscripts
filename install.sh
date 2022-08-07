@@ -129,7 +129,17 @@ crontab /home/$USER/.local/share/crontab/crontabs
 # generate more heat and thus make the fan spin harder.
 wget --directory-prefix /home/$USER/.local/bin -q https://github.com/intel/dptfxtract/raw/master/dptfxtract
 chmod +x /home/$USER/.local/bin/dptfxtract
-# TODO: Install
-# - nvim
-# - dunst
-# - alacritty
+# Nvim
+wget --directory-prefix /home/$USER/Downloads -q https://github.com/neovim/neovim/releases/download/v0.7.2/nvim-linux64.deb
+sudo apt-get install -y /home/$USER/Downloads/nvim-linux64.deb
+# Dunst.
+sudo apt-get install -y libdbus-1-dev libx11-dev libxinerama-dev libxrandr-dev libxss-dev libglib2.0-dev libpango1.0-dev libgtk-3-dev libxdg-basedir-dev
+cd /home/$USER/.opt/dunst  # path exists in dotfiles repo
+make
+sudo make install
+# Alacritty.
+sudo apt-get install -y apt-get install cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev
+cd /home/$USER/.opt/alacritty  # path exists in dotfiles repo
+cargo build --release
+sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+sudo cp target/release/alacritty /home/$USER/.local/bin
