@@ -122,3 +122,14 @@ sudo rm /etc/apparmor.d/local/usr.bin.redshift /etc/apparmor.d/usr.bin.redshift
 sudo systemctl reload apparmor.service
 # Remove Gnome Display Manager and start on a tty instead
 sudo apt-get remove -y gdm3
+# Set up crontabs from dotfiles repo
+crontab /home/$USER/.local/share/crontab/crontabs
+# Get dptfxtract to set up thermald config. However, don't decide for
+# the user and don't execute it. The increased performance will
+# generate more heat and thus make the fan spin harder.
+wget --directory-prefix /home/$USER/.local/bin -q https://github.com/intel/dptfxtract/raw/master/dptfxtract
+chmod +x /home/$USER/.local/bin/dptfxtract
+# TODO: Install
+# - nvim
+# - dunst
+# - alacritty
