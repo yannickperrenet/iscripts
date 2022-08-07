@@ -93,6 +93,9 @@ done
 # Install the programs from the progsfile.
 progsinstallation
 
+# Install programming languages that are needed later.
+curl https://sh.rustup.rs -sSf | sh -s -- -y
+
 # Install the dotfiles in the user's home directory.
 echo "Installing dotfiles..."
 # putgitrepo "$dotfilesrepo" "/home/$USER"
