@@ -13,3 +13,5 @@ node_install() {
 sudo npm install -g pyright
 # Typescript
 sudo npm install -g typescript typescript-language-server
+# C
+sudo apt-get install -y clangd
