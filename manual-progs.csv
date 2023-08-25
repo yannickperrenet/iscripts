@@ -4,3 +4,6 @@ spotify,"is a digital streaming service for music.","https://www.spotify.com/nl/
 pwsafe,"is a password database.","https://github.com/pwsafe/pwsafe/releases","https://packages.ubuntu.com/search?keywords=passwordsafe"
 slack,"is a communication platform for work.","https://slack.com/intl/en-nl/downloads/linux",
 obs,"is a screen recorder","https://obsproject.com/"
+google-drive-ocamlfuse,"is a FUSE filesystem over Google Drive","https://github.com/astrada/google-drive-ocamlfuse"
+dropbox,"can be used to sync files between devices","https://www.dropbox.com/install?os=lnx"
+sioyek,"is a PDF viewer","https://github.com/ahrm/sioyek"
