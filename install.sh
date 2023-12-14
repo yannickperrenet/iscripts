@@ -119,6 +119,11 @@ sudo -u "$USER" mkdir -p "/home/$USER/.cache/zsh/"
 # If specified, then install language servers.
 [ "$lsp" ] && sh language_servers.sh
 
+# ----- Manual configuration
+# Disable connectivity pings
+sudo cp /home/$USER/.local/share/disable-check.conf /etc/NetworkManager/conf.d/
+sudo service NetworkManager restart
+
 # ----- Application specific installation
 # See: https://github.com/jonls/redshift/issues/850
 sudo rm /etc/apparmor.d/local/usr.bin.redshift /etc/apparmor.d/usr.bin.redshift

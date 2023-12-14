@@ -15,3 +15,5 @@ sudo npm install -g pyright
 sudo npm install -g typescript typescript-language-server
 # C
 sudo apt-get install -y clangd
+# Rust
+rustup component add rust-src rust-analyzer
