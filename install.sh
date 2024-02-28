@@ -125,6 +125,8 @@ sudo cp /home/$USER/.local/share/disable-check.conf /etc/NetworkManager/conf.d/
 sudo service NetworkManager restart
 
 # ----- Application specific installation
+# Latest version of rclone
+sudo -v ; curl https://rclone.org/install.sh | sudo bash
 # See: https://github.com/jonls/redshift/issues/850
 sudo rm /etc/apparmor.d/local/usr.bin.redshift /etc/apparmor.d/usr.bin.redshift
 sudo systemctl reload apparmor.service
