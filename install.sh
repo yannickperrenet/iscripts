@@ -42,12 +42,17 @@ maininstall() {
 pipinstall() {
     echo "Installing the Python package \`$1\` ($n of $total). $1 $2"
 
-    # Install pip3 if it is not yet installed.
-    [ -x "$(command -v "pip3")" ] || installpkg python3-pip > /dev/null 2>&1
+    # Install the Python package without prompting the user for
+    # confirmation.
+    yes | pipx install "$1"
+}
+
+pipxinject() {
+    echo "Installing the Python package \`$1\` ($n of $total). $1 $2"
 
     # Install the Python package without prompting the user for
     # confirmation.
-    yes | pip3 install "$1"
+    yes | pipx inject "$2" "$1"
 }
 
 progsinstallation() {
@@ -66,6 +71,7 @@ progsinstallation() {
 
         case "$tag" in
             "P") pipinstall "$program" "$comment" ;;
+            "PI") pipxinject "$program" "$comment" ;;
             *) maininstall "$program" "$comment" ;;
         esac
     done < /tmp/progs.csv
@@ -95,6 +101,7 @@ progsinstallation
 
 # Install programming languages that are needed later.
 curl https://sh.rustup.rs -sSf | sh -s -- -y
+rustup default stable
 
 # Install the dotfiles in the user's home directory.
 echo "Installing dotfiles..."
@@ -121,8 +128,11 @@ sudo -u "$USER" mkdir -p "/home/$USER/.cache/zsh/"
 
 # ----- Manual configuration
 # Disable connectivity pings
-sudo cp /home/$USER/.local/share/disable-check.conf /etc/NetworkManager/conf.d/
+sudo cp /home/$USER/.local/share/NetworkManager/disable-check.conf /etc/NetworkManager/conf.d/
 sudo service NetworkManager restart
+
+# Custom names for my SSDs
+sudo cp /home/sven/.local/share/udev/10-mydrives.rules /etc/udev/rules.d/
 
 # ----- Application specific installation
 # Latest version of rclone
