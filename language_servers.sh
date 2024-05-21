@@ -1,7 +1,7 @@
 #!/bin/sh
 
 node_install() {
-    curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+    curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
     sudo apt install -y nodejs >/dev/null 2>&1
 }
 
