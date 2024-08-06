@@ -135,8 +135,6 @@ sudo service NetworkManager restart
 sudo cp /home/sven/.local/share/udev/10-mydrives.rules /etc/udev/rules.d/
 
 # ----- Application specific installation
-# Latest version of rclone
-sudo -v ; curl https://rclone.org/install.sh | sudo bash
 # See: https://github.com/jonls/redshift/issues/850
 sudo rm /etc/apparmor.d/local/usr.bin.redshift /etc/apparmor.d/usr.bin.redshift
 sudo systemctl reload apparmor.service
@@ -150,7 +148,7 @@ crontab /home/$USER/.local/share/crontab/crontabs
 wget --directory-prefix /home/$USER/.local/bin -q https://github.com/intel/dptfxtract/raw/master/dptfxtract
 chmod +x /home/$USER/.local/bin/dptfxtract
 # Nvim
-wget --directory-prefix /home/$USER/Downloads -q https://github.com/neovim/neovim/releases/download/v0.9.0/nvim-linux64.tar.gz
+wget --directory-prefix /home/$USER/Downloads -q https://github.com/neovim/neovim/releases/download/v0.10.1/nvim-linux64.tar.gz
 tar xzvf /home/$USER/Downloads/nvim-linux64.tar.gz -C /home/$USER/.local/ --strip-components 1
 # Dunst.
 sudo apt-get install -y libdbus-1-dev libx11-dev libxinerama-dev libxrandr-dev libxss-dev libglib2.0-dev libpango1.0-dev libgtk-3-dev libxdg-basedir-dev
