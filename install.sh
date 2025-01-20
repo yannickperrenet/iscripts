@@ -161,3 +161,8 @@ cd /home/$USER/.opt/alacritty  # path exists in dotfiles repo
 cargo build --release
 sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
 sudo cp target/release/alacritty /home/$USER/.local/bin
+# Zotero: https://www.zotero.org/support/installation
+# mkdir /home/$USER/.opt/zotero && cd /home/$USER/.opt/zotero
+# tar xjvf Zotero-7.0.11_linux-x86_64.tar.bz2 -C ~/.opt/zotero --strip-components 1
+# ./set_launcher_icon
+# ln -s /home/$USER/.opt/zotero/zotero.desktop ~/.local/share/applications/zotero.desktop
