@@ -91,17 +91,13 @@ putgitrepo() { # Downloads a gitrepo $1 and places the files in $2 only overwrit
 ### THE ACTUAL SCRIPT ###
 
 # Build dependencies.
-for x in curl git zsh; do
+for x in curl git zsh make; do
 	echo "Installing \`$x\` which is required to install and configure other programs."
 	installpkg "$x"
 done
 
 # Install the programs from the progsfile.
 progsinstallation
-
-# Install programming languages that are needed later.
-curl https://sh.rustup.rs -sSf | sh -s -- -y
-rustup default stable
 
 # Install the dotfiles in the user's home directory.
 echo "Installing dotfiles..."
@@ -117,50 +113,60 @@ dfg submodule update --init --recursive
 # Delete files, but make git ignore the deletion. The files can simply
 # be restored with e.g. `dfg checkout README.md`.
 rm -f "/home/$USER/README.md" "/home/$USER/LICENSE"
-dfg update-index --assume-unchanged "/home/$USER/README.md" "/home/$USER/LICENSE"
+dfg update-index --assume-unchanged \
+    "/home/$USER/README.md" \
+    "/home/$USER/LICENSE" \
+    "/home/$USER/.config/gtk-3.0/settings.ini" \
+    "/home/$USER/.local/share/redshift/current_period" \
+    "/home/$USER/.config/alacritty/alacritty.toml"
 
 # Make zsh the default shell for the user.
 sudo chsh -s /bin/zsh "$USER" > /dev/null 2>&1
 sudo -u "$USER" mkdir -p "/home/$USER/.cache/zsh/"
 
-# If specified, then install language servers.
-[ "$lsp" ] && sh language_servers.sh
+# Now that we have the dotfiles, load profile to set env vars.
+. "/home/$USER/.profile"
 
 # ----- Manual configuration
 # Disable connectivity pings
 sudo cp /home/$USER/.local/share/NetworkManager/disable-check.conf /etc/NetworkManager/conf.d/
 sudo service NetworkManager restart
-
 # Custom names for my SSDs
 sudo cp /home/sven/.local/share/udev/10-mydrives.rules /etc/udev/rules.d/
+# Set up crontabs from dotfiles repo
+crontab /home/$USER/.local/share/crontab/crontabs
+
+# Install programming languages that are needed later.
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+rustup default stable
+
+# If specified, then install language servers.
+[ "$lsp" ] && sh language_servers.sh
 
 # ----- Application specific installation
 # See: https://github.com/jonls/redshift/issues/850
-sudo rm /etc/apparmor.d/local/usr.bin.redshift /etc/apparmor.d/usr.bin.redshift
+[ -e "/etc/apparmor.d/local/usr.bin/redshift" ] && sudo rm /etc/apparmor.d/local/usr.bin.redshift
+[ -e "/etc/apparmor.d/usr.bin.redshift" ] && sudo rm /etc/apparmor.d/usr.bin.redshift
 sudo systemctl reload apparmor.service
 # Remove Gnome Display Manager and start on a tty instead
 sudo apt-get remove -y gdm3
-# Set up crontabs from dotfiles repo
-crontab /home/$USER/.local/share/crontab/crontabs
 # Get dptfxtract to set up thermald config. However, don't decide for
 # the user and don't execute it. The increased performance will
 # generate more heat and thus make the fan spin harder.
 wget --directory-prefix /home/$USER/.local/bin -q https://github.com/intel/dptfxtract/raw/master/dptfxtract
 chmod +x /home/$USER/.local/bin/dptfxtract
 # Nvim
-wget --directory-prefix /home/$USER/Downloads -q https://github.com/neovim/neovim/releases/download/v0.11.2/nvim-linux-x86_64.tar.gz
-tar xzvf /home/$USER/Downloads/nvim-linux64.tar.gz -C /home/$USER/.local/ --strip-components 1
-# Dunst.
-sudo apt-get install -y libdbus-1-dev libx11-dev libxinerama-dev libxrandr-dev libxss-dev libglib2.0-dev libpango1.0-dev libgtk-3-dev libxdg-basedir-dev
-cd /home/$USER/.opt/dunst  # path exists in dotfiles repo
-make
-sudo make install
+wget --directory-prefix /home/$USER/Downloads -q https://github.com/neovim/neovim/releases/download/v0.11.4/nvim-linux-x86_64.tar.gz
+tar xzvf /home/$USER/Downloads/nvim-linux-x86_64.tar.gz -C /home/$USER/.local/ --strip-components 1
 # Alacritty.
-sudo apt-get install -y apt-get install cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev
+sudo apt-get install -y cmake g++ pkg-config libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
 cd /home/$USER/.opt/alacritty  # path exists in dotfiles repo
 cargo build --release
 sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
 sudo cp target/release/alacritty /home/$USER/.local/bin
+sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
+sudo desktop-file-install extra/linux/Alacritty.desktop
+sudo update-desktop-database
 # Zotero: https://www.zotero.org/support/installation
 # mkdir /home/$USER/.opt/zotero && cd /home/$USER/.opt/zotero
 # tar xjvf Zotero-7.0.11_linux-x86_64.tar.bz2 -C ~/.opt/zotero --strip-components 1
