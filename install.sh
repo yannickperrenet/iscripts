@@ -134,7 +134,8 @@ sudo service NetworkManager restart
 # Custom names for my SSDs
 sudo cp /home/sven/.local/share/udev/10-mydrives.rules /etc/udev/rules.d/
 # Set up crontabs from dotfiles repo
-crontab /home/$USER/.local/share/crontab/crontabs
+crontab /home/$USER/.local/share/crontab/user
+sudo crontab -u clamav /home/$USER/.local/share/crontab/clamav
 
 # Install programming languages that are needed later.
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
