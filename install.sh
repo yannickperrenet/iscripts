@@ -132,7 +132,7 @@ sudo -u "$USER" mkdir -p "/home/$USER/.cache/zsh/"
 sudo cp /home/$USER/.local/share/NetworkManager/disable-check.conf /etc/NetworkManager/conf.d/
 sudo service NetworkManager restart
 # Custom names for my SSDs
-sudo cp /home/sven/.local/share/udev/10-mydrives.rules /etc/udev/rules.d/
+sudo cp /home/$USER/.local/share/udev/10-mydrives.rules /etc/udev/rules.d/
 # Set up crontabs from dotfiles repo
 crontab /home/$USER/.local/share/crontab/user
 sudo crontab -u clamav /home/$USER/.local/share/crontab/clamav
